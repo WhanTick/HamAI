@@ -25,11 +25,12 @@ HamAI/
 ## Prerequisites 📋
 
 *   Python 3.7+
-*   Access to Google Cloud Platform:
+*   **Google Cloud Platform Account:**
     *   A Google Cloud Project ID.
     *   Vertex AI API enabled for your project.
-    *   Authenticated `gcloud` CLI or Application Default Credentials set up.
-*   ElevenLabs Account:
+    *   Authenticated `gcloud` CLI (see Setup instructions).
+    *   **Google Cloud Free Trial Note:** New Google Cloud users can often take advantage of a **$300 free credit valid for 3 months**. This trial is excellent for experimenting with Google's AI models like **Gemini LLM, Imagen (image generation), and Veo 2 (video generation)**, among many other services. While the free trial generally restricts the use of GPUs for heavy AI model training or graphic-intensive programs, Google **does allow fine-tuning of models** (which can be GPU-intensive) within the free trial. This project can be run using these free credits.
+*   **ElevenLabs Account:**
     *   An ElevenLabs API Key.
     *   A Voice ID from ElevenLabs.
     *   (Optional) A specific ElevenLabs Model ID.
@@ -48,13 +49,25 @@ HamAI/
     source venv/bin/activate  # On Windows: venv\Scripts\activate
     ```
 
-3.  **Install dependencies:**
+3.  **Install Python dependencies:**
     ```bash
     pip install google-generativeai python-dotenv elevenlabs
+    # Ensure you have the latest version of google-generativeai
+    pip install --upgrade google-generativeai
     ```
-    *Note: `google-generativeai` is used, which can interface with Vertex AI if configured.*
 
-4.  **Configure Environment Variables:**
+4.  **Set up Google Cloud Authentication:**
+    If you haven't already, install the Google Cloud CLI ([gcloud CLI](https://cloud.google.com/sdk/docs/install)). Then, authenticate your local environment:
+    ```bash
+    gcloud auth application-default login
+    ```
+    This command will open a browser window for you to log in with your Google account.
+    After successful login, set your project for quota and billing purposes (replace `YOUR_PROJECT_ID` with your actual Google Cloud Project ID):
+    ```bash
+    gcloud auth application-default set-quota-project YOUR_PROJECT_ID
+    ```
+
+5.  **Configure Environment Variables:**
     Create a `.env` file in the root of the project directory with the following content. Replace the placeholder values with your actual credentials and preferences:
 
     ```env
@@ -66,15 +79,15 @@ HamAI/
     LANGUAGE_CODE="id" # Indonesian, matching the slang corrector
 
     # Google Cloud / Vertex AI Configuration
-    PROJECT_ID="your-gcp-project-id"
+    PROJECT_ID="your-gcp-project-id" # Make sure this matches the one used in `set-quota-project`
     LOCATION="your-gcp-project-location" # e.g., "us-central1"
-    MODEL_ENDPOINT="gemini-1.0-pro" # Or other compatible model like "gemini-1.5-flash-latest"
+    MODEL_ENDPOINT="gemini-2.0-flash-lite" # Or other compatible model, personally I'm using a finetuned version of gemini-2.0-flash-lite
 
     # Application Configuration
     SYSTEM_PROMPT_PATH="system_prompt.txt"
     ```
 
-5.  **Create the System Prompt File:**
+6.  **Create the System Prompt File:**
     Create a file named `system_prompt.txt` (or the path you specified in `SYSTEM_PROMPT_PATH`) in the project root. This file defines the AI's behavior, personality, and any specific instructions.
     Example `system_prompt.txt`:
     ```txt
@@ -83,6 +96,7 @@ HamAI/
     Your responses should be concise and informative.
     You are an expert in Indonesian culture.
     ```
+
 
 ## Running the Application ▶️
 
