@@ -1,0 +1,10 @@
+/.env
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/hamAI.iml
+/.idea/vcs.xml
+/system_prompt.txt
+/memory.json
+/main.py
